@@ -1,0 +1,2 @@
+packages:
+  - local: '/Users/daniel.palma/BDC/dbt_artifacts'

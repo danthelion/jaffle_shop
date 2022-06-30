@@ -3,24 +3,39 @@ name: 'jaffle_shop'
 config-version: 2
 version: '0.1'
 
-profile: 'jaffle_shop'
+profile: 'dbt_dev_artifacts'
 
-model-paths: ["models"]
-seed-paths: ["seeds"]
-test-paths: ["tests"]
-analysis-paths: ["analysis"]
-macro-paths: ["macros"]
+model-paths: [ "models" ]
+seed-paths: [ "seeds" ]
+test-paths: [ "tests" ]
+analysis-paths: [ "analysis" ]
+macro-paths: [ "macros" ]
 
 target-path: "target"
 clean-targets:
-    - "target"
-    - "dbt_modules"
-    - "logs"
+  - "target"
+  - "dbt_modules"
+  - "logs"
 
-require-dbt-version: [">=1.0.0", "<2.0.0"]
+require-dbt-version: [ ">=1.0.0", "<2.0.0" ]
+
+vars:
+  dbt_artifacts:
+    dbt_artifacts_database: ANALYTICS_DEV
+    dbt_artifacts_schema: BDC_DANI # optional, default is 'dbt_artifacts'
+    dbt_artifacts_table: artifacts # optional, default is 'artifacts'
+    dbt_artifacts_results_table: dbt_run_results # optional, default is 'dbt_run_results'
+    dbt_artifacts_result_nodes_table: dbt_run_result_nodes # optional, default is 'dbt_run_result_nodes'
+    dbt_artifacts_manifest_nodes_table: dbt_manifest_nodes # optional, default is 'dbt_manifest_nodes'
 
 models:
+#  dbt_artifacts:
+#    +schema: BDC_DANI
+#    staging:
+#      +schema: BDC_DANI
   jaffle_shop:
-      materialized: table
-      staging:
-        materialized: view
+    materialized: table
+    staging:
+      materialized: view
+
+on-run-end: "{{ ingest_metadata(results) }}"
