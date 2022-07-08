@@ -29,13 +29,10 @@ vars:
     dbt_artifacts_manifest_nodes_table: dbt_manifest_nodes # optional, default is 'dbt_manifest_nodes'
 
 models:
-#  dbt_artifacts:
-#    +schema: BDC_DANI
-#    staging:
-#      +schema: BDC_DANI
   jaffle_shop:
     materialized: table
     staging:
       materialized: view
-
-on-run-end: "{{ ingest_metadata(results) }}"
+#
+on-run-end:
+  - "{{ dbt_artifacts.ingest_metadata(results) }}"

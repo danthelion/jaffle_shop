@@ -1,2 +1,2 @@
 packages:
-  - local: '/Users/daniel.palma/BDC/dbt_artifacts'
+  - local: '/Users/daniel.palma/BDC/dbt_artifacts_internal'
